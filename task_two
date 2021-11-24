@@ -1,0 +1,84 @@
+#include <iostream>;
+#include <list>;
+using namespace std;
+
+
+class Product {
+private:
+	double _cost;
+	string _name;
+	int _count;
+public:
+	Product(double cost, string name, int count) : _cost(cost), _name(name), _count(count) {};
+
+	double get_cost() {
+		return _cost;
+	}
+
+	string get_name() {
+		return _name;
+	}
+
+	int get_count() {
+		return _count;
+	}
+};
+
+class Warehouse {
+public:
+
+	list<Product*> get_product() {
+
+		list<Product*> products;
+		products.push_back(new Product(80, "Молоко", 30));
+		products.push_back(new Product(30, "Хлеб", 50));
+		products.push_back(new Product(100, "Яйца", 27));
+		products.push_back(new Product(120, "Масло", 56));
+		products.push_back(new Product(60, "Мука", 100));
+
+		return products;
+	}
+};
+
+class Discount {
+public:
+	double get_discount(Product* p) {
+		if (p->get_name() == "Молоко") {
+			return 0.01;
+		}
+		else if (p->get_name() == "Хлеб") {
+			return 0.05;
+		}
+		else if (p->get_name() == "Яйца") {
+			return 0.1;
+		}
+		else if (p->get_name() == "масло") {
+			return 0.15;
+		}
+		else if (p->get_name() == "Мука") {
+			return 0.1;
+		}
+	}
+};
+
+class ProductService {
+public:
+	double get_all_discount() {
+		double sum = 0;
+
+		Warehouse* wh = new Warehouse();
+		list<Product*> new_list = wh->get_product();
+		Discount* ds = new Discount();
+
+		for (Product* p : new_list) {
+			sum = p->get_cost() * p->get_count() * ds->get_discount(p);
+			return sum;
+		}
+	}
+};
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	ProductService* ps = new ProductService();
+	cout << "Скидка на все товары = " << ps->get_all_discount() << endl;
+}
