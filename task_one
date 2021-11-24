@@ -1,0 +1,97 @@
+#include <iostream>;
+#include <list>;
+using namespace std;
+
+
+class Tasks {
+public:
+	virtual void complete_simple_task() {
+		cout << "Выполняю простую задачу" << endl;
+	}
+
+	virtual void complete_medium_task() {
+		cout << "Выполняю задачу средней сложности" << endl;
+	}
+
+	virtual void complete_hard_task() {
+		cout << "Выполняю сложную задачу" << endl;
+	}
+};
+
+
+
+class SeniorDeveloper : public Tasks {
+public:
+	virtual void complete_simple_task() override {
+		cout << "Senior-разработчик может выполнить простую задачу" << endl;
+	}
+
+	virtual void complete_medium_task() override {
+		cout << "Senior-разработчик может выполнить среднюю задачу" << endl;
+	}
+
+	virtual void complete_hard_task() override {
+		cout << "Senior-разработчик может выполнить сложную задачу" << endl;
+	}
+
+	virtual void get_name() {
+		cout << "Senior-разработчик";
+	}
+};
+
+class MiddleDeveloper : public Tasks {
+public:
+
+	virtual void complete_simple_task() override {
+		cout << "Middle-разработчик может выполнить простую задачу" << endl;
+	}
+
+	virtual void complete_medium_task() override {
+		cout << "Middle-разработчик может выполнить среднюю задачу" << endl;
+	}
+
+	virtual void complete_hard_task() override {
+		cout << "Middle-разработчик не может выполнить сложную задачу" << endl;
+	}
+
+	virtual void get_name() {
+		cout << "Middle-разработчик";
+	}
+};
+
+class JuniorDeveloper : public Tasks {
+public:
+
+	virtual void complete_simple_task() override {
+		cout << "Junior-разработчик может выполнить простую задачу" << endl;
+	}
+
+	virtual void complete_medium_task() override {
+		cout << "Junior-разработчик не может выполнить среднюю задачу" << endl;
+	}
+
+	virtual void complete_hard_task() override {
+		cout << "Junior-разработчик не может выполнить сложную задачу" << endl;
+	}
+
+	virtual void get_name() {
+		cout << "Junior-разработчик";
+	}
+};
+
+static void letCompleteMediumTasks(list <Tasks*> tasks) {
+
+	for (Tasks* task : tasks) {
+		task->complete_medium_task();
+	}
+}
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	list <Tasks*> task;
+	task.push_back(new SeniorDeveloper());
+	task.push_back(new MiddleDeveloper());
+	task.push_back(new JuniorDeveloper());
+
+	letCompleteMediumTasks(task);
+}
